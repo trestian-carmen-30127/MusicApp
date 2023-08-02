@@ -17,13 +17,14 @@ export class DeezerApiService {
     const url = `${this.deezerApiUrl}/search/artist?q=${query}`;
     return this.http.get<any>(url);
   }
-  getArtistAlbums(artistId: number): Observable<any> {
+  getAlbums(artistId: number): Observable<any> {
     const url = `${this.deezerApiUrl}/artist/${artistId}/albums`;
     return this.http.get<any>(url);
   }
 
-  getAlbumTracks(albumId: number): Observable<any> {
+  getTracks(albumId: number): Observable<any> {
     const url = `${this.deezerApiUrl}/album/${albumId}/tracks`;
     return this.http.get<any>(url);
   }
 }
+
