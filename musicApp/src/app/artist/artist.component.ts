@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { DeezerApiService } from '../deezer-api.service';
+import { DeezerApiService } from '../../deezer-api.service';
 import { Router } from '@angular/router';
 
+import { DeezerArtist } from '../../deezer-interfaces';
 
 @Component({
   selector: 'app-artist',
@@ -11,9 +12,15 @@ import { Router } from '@angular/router';
 export class ArtistComponent {
 
   searchQuery: string = '';
-  artist: any[] = [];
+  artist: DeezerArtist[] = [];
 
   constructor(private deezerApiService: DeezerApiService, private router: Router) { }
+
+
+  onSearchInput(event: Event): void {
+    this.searchQuery = (event.target as HTMLInputElement).value;
+    this.searchArtists();
+  }
 
   searchArtists(): void {
     if (this.searchQuery.trim() == '') {
