@@ -1,1 +1,9 @@
-<p>track works!</p>
+<div class="track-container">
+    <div class="track" *ngFor="let track of tracks">
+        <p>{{ track.title }}</p>
+        <audio controls>
+            <source [src]="track.preview" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+</div>

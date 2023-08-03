@@ -1,4 +1,8 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { DeezerApiService } from '../../deezer-api.service';
+import { DeezerTrack } from '../../deezer-interfaces';
+
 
 @Component({
   selector: 'app-track',
@@ -6,5 +10,22 @@ import { Component } from '@angular/core';
   styleUrls: ['./track.component.css']
 })
 export class TrackComponent {
+  albumId: number;
+  tracks: DeezerTrack[] = [];
 
+  constructor(private route: ActivatedRoute, private deezerApiService: DeezerApiService) { }
+
+  ngOnInit(): void {
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      this.albumId = Number(params.get('albumId'));
+      this.getAlbumTracks();
+    });
+  }
+
+  getAlbumTracks(): void {
+    this.deezerApiService.getTracks(this.albumId).subscribe(
+      (response) => { this.tracks = response; },
+      (error) => { console.error('Error fetching tracks:', error); }
+    );
+  }
 }

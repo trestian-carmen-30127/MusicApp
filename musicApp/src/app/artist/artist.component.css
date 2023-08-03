@@ -1,0 +1,39 @@
+.artist-container {
+    padding: 20px;
+}
+
+.search-container {
+    margin-bottom: 20px;
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.card {
+    width: 200px;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #850e0e;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.card:hover {
+    background-color: #92bade;
+}
+
+img {
+    width: 100%;
+    height: auto;
+}
+
+.info {
+    margin-top: 10px;
+}
+
+p {
+    margin: 0;
+}

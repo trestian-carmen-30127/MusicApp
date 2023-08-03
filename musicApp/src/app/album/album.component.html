@@ -1,1 +1,9 @@
-<p>album works!</p>
+<div class="album-container">
+    <div class="album" *ngFor="let album of albums">
+        <img [src]="album.cover_medium" alt="Album">
+        <div class="info">
+            <p>{{ album.title }}</p>
+            <p>Data lansării: {{ album.release_date }}</p>
+        </div>
+    </div>
+</div>
