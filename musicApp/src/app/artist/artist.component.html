@@ -1,16 +1,19 @@
 <div class="artist-container">
+  <form [formGroup]="searchArtistForm">
     <div class="search-container">
-        <input type="text" [value]="searchQuery" (input)="searchArtists()" placeholder="Caută artiști după nume">
+      <input type="text" formControlName="artistName" placeholder="Caută artiști după nume">
     </div>
+  </form>
 
-    <div class="card-container">
-        <div class="card" *ngFor="let artist of artists" (click)="routingService.goToAlbumList(artist.id)">
-            <img [src]="artist.picture_medium" alt="Artist">
-            <div class="info">
-                <p>{{ artist.name }}</p>
-                <p>Număr albume: {{ artist.nb_album }}</p>
-                <p>Număr fani: {{ artist.nb_fan }}</p>
-            </div>
-        </div>
+
+  <div class="card-container">
+    <div class="card" *ngFor="let artist of artists" (click)="routingService.goToAlbumList(artist.id)">
+      <img [src]="artist.picture_medium" alt="Artist">
+      <div class="info">
+        <p>{{ artist.name }}</p>
+        <p>Număr albume: {{ artist.nb_album }}</p>
+        <p>Număr fani: {{ artist.nb_fan }}</p>
+      </div>
     </div>
+  </div>
 </div>

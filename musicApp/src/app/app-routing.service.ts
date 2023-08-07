@@ -13,7 +13,7 @@ export class AppRoutingService {
     }
 
     goToAlbumList(artistId: number): void {
-        this.router.navigate(['/albums', artistId]);
+        this.router.navigate(['/album', artistId]);
     }
 
     goToTrackList(albumId: number): void {

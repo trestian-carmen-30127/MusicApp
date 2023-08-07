@@ -10,14 +10,14 @@ import { DeezerAlbum } from '../../deezer-interfaces';
 })
 export class AlbumComponent {
 
-  artistId: number;
+  artistId: number = 0;
   albums: DeezerAlbum[] = [];
 
   constructor(private route: ActivatedRoute, private deezerApiService: DeezerApiService) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params: ParamMap) => {
-      this.artistId = Number(params.get('artistId'));
+      this.artistId = Number(params.get('id'));
       this.getArtistAlbums();
     });
   }
