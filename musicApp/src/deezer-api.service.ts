@@ -3,7 +3,10 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DeezerArtist, DeezerAlbum, DeezerTrack } from './deezer-interfaces';
+import { Request, Response, NextFunction } from 'express';
 
+//import retrofit2.Call;
+//import retrofit2.http.GET;
 
 @Injectable({
   providedIn: 'root'
@@ -13,35 +16,32 @@ export class DeezerApiService {
   private deezerApiUrl = 'http://api.deezer.com';
 
 
-  constructor(private http: HttpClient) { }
+  private root: string;
+  private corsHeaders: HttpHeaders;
+  constructor(private http: HttpClient) {
+    this.root = 'https://api.deezer.com';  //remove
+    this.corsHeaders = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Access-Control-Allow-Origin': '/' // edit 
+    });
+  }
 
   searchArtists(query: string): Observable<any> {
-    let httpHeaders = new HttpHeaders()
-    //.set('Accept', 'application/json')
-    //.set({ 'Content-Type': 'application/json'})
 
-
-
-    //'Access-Control-Allow-Origin', '*')
-    //httpHeaders.set('Access-Control-Allow-Origin', "*");
-    // httpHeaders.set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
-
-
+    /*
+        const express = require('express');
+        const cors = require('cors');
+    
+        const app = express();
+        app.use(cors());
+        const port = process.env.PORT || 4200;
+        app.listen(port, () => {
+          console.log(`Server is running on port ${port}`);
+        });*/
     const url = `${this.deezerApiUrl}/search/artist?q=${query}`;
-    return of(JSON.parse('[{"id":3471501,"name":"Hedo","link":"https:\/\/www.deezer.com\/artist\/3471501","picture":"https:\/\/api.deezer.com\/artist\/3471501\/image","picture_small":"https:\/\/e-cdns-images.dzcdn.net\/images\/artist\/22e982a703e43bed7ce1325ee95e0a1f\/56x56-000000-80-0-0.jpg","picture_medium":"https:\/\/e-cdns-images.dzcdn.net\/images\/artist\/22e982a703e43bed7ce1325ee95e0a1f\/250x250-000000-80-0-0.jpg","picture_big":"https:\/\/e-cdns-images.dzcdn.net\/images\/artist\/22e982a703e43bed7ce1325ee95e0a1f\/500x500-000000-80-0-0.jpg","picture_xl":"https:\/\/e-cdns-images.dzcdn.net\/images\/artist\/22e982a703e43bed7ce1325ee95e0a1f\/1000x1000-000000-80-0-0.jpg","nb_album":29,"nb_fan":58,"radio":true,"tracklist":"https:\/\/api.deezer.com\/artist\/3471501\/top?limit=50","type":"artist"},{"id":12817095,"name":"Juan Hedo","link":"https:\/\/www.deezer.com\/artist\/12817095","picture":"https:\/\/api.deezer.com\/artist\/12817095\/image","picture_small":"https:\/\/e-cdns-images.dzcdn.net\/images\/artist\/85a10d3407cea7a734122baecb016a88\/56x56-000000-80-0-0.jpg","picture_medium":"https:\/\/e-cdns-images.dzcdn.net\/images\/artist\/85a10d3407cea7a734122baecb016a88\/250x250-000000-80-0-0.jpg","picture_big":"https:\/\/e-cdns-images.dzcdn.net\/images\/artist\/85a10d3407cea7a734122baecb016a88\/500x500-000000-80-0-0.jpg","picture_xl":"https:\/\/e-cdns-images.dzcdn.net\/images\/artist\/85a10d3407cea7a734122baecb016a88\/1000x1000-000000-80-0-0.jpg","nb_album":11,"nb_fan":2,"radio":true,"tracklist":"https:\/\/api.deezer.com\/artist\/12817095\/top?limit=50","type":"artist"},{"id":89258812,"name":"HFD Records","link":"https:\/\/www.deezer.com\/artist\/89258812","picture":"https:\/\/api.deezer.com\/artist\/89258812\/image","picture_small":"https:\/\/e-cdns-images.dzcdn.net\/images\/artist\/a67d4f17c059c335eaf2a57ffab300d9\/56x56-000000-80-0-0.jpg","picture_medium":"https:\/\/e-cdns-images.dzcdn.net\/images\/artist\/a67d4f17c059c335eaf2a57ffab300d9\/250x250-000000-80-0-0.jpg","picture_big":"https:\/\/e-cdns-images.dzcdn.net\/images\/artist\/a67d4f17c059c335eaf2a57ffab300d9\/500x500-000000-80-0-0.jpg","picture_xl":"https:\/\/e-cdns-images.dzcdn.net\/images\/artist\/a67d4f17c059c335eaf2a57ffab300d9\/1000x1000-000000-80-0-0.jpg","nb_album":32,"nb_fan":54,"radio":true,"tracklist":"https:\/\/api.deezer.com\/artist\/89258812\/top?limit=50","type":"artist"}]'))
-    /*return this.http.get<any>(url, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': 'http://localhost:4200',
-        'Access-Control-Allow-Credentials': 'true',
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
-        'key': 'x-api-key',
-        'value': 'NNctr6Tjrw9794gFXf3fi6zWBZ78j6Gv3UCb3y0x'
-      },
-      responseType: 'json'
-    }).pipe(map(response => { return JSON.parse('[{"id":3471501,"name":"Hedo","link":"https:\/\/www.deezer.com\/artist\/3471501","picture":"https:\/\/api.deezer.com\/artist\/3471501\/image","picture_small":"https:\/\/e-cdns-images.dzcdn.net\/images\/artist\/22e982a703e43bed7ce1325ee95e0a1f\/56x56-000000-80-0-0.jpg","picture_medium":"https:\/\/e-cdns-images.dzcdn.net\/images\/artist\/22e982a703e43bed7ce1325ee95e0a1f\/250x250-000000-80-0-0.jpg","picture_big":"https:\/\/e-cdns-images.dzcdn.net\/images\/artist\/22e982a703e43bed7ce1325ee95e0a1f\/500x500-000000-80-0-0.jpg","picture_xl":"https:\/\/e-cdns-images.dzcdn.net\/images\/artist\/22e982a703e43bed7ce1325ee95e0a1f\/1000x1000-000000-80-0-0.jpg","nb_album":29,"nb_fan":58,"radio":true,"tracklist":"https:\/\/api.deezer.com\/artist\/3471501\/top?limit=50","type":"artist"},{"id":12817095,"name":"Juan Hedo","link":"https:\/\/www.deezer.com\/artist\/12817095","picture":"https:\/\/api.deezer.com\/artist\/12817095\/image","picture_small":"https:\/\/e-cdns-images.dzcdn.net\/images\/artist\/85a10d3407cea7a734122baecb016a88\/56x56-000000-80-0-0.jpg","picture_medium":"https:\/\/e-cdns-images.dzcdn.net\/images\/artist\/85a10d3407cea7a734122baecb016a88\/250x250-000000-80-0-0.jpg","picture_big":"https:\/\/e-cdns-images.dzcdn.net\/images\/artist\/85a10d3407cea7a734122baecb016a88\/500x500-000000-80-0-0.jpg","picture_xl":"https:\/\/e-cdns-images.dzcdn.net\/images\/artist\/85a10d3407cea7a734122baecb016a88\/1000x1000-000000-80-0-0.jpg","nb_album":11,"nb_fan":2,"radio":true,"tracklist":"https:\/\/api.deezer.com\/artist\/12817095\/top?limit=50","type":"artist"},{"id":89258812,"name":"HFD Records","link":"https:\/\/www.deezer.com\/artist\/89258812","picture":"https:\/\/api.deezer.com\/artist\/89258812\/image","picture_small":"https:\/\/e-cdns-images.dzcdn.net\/images\/artist\/a67d4f17c059c335eaf2a57ffab300d9\/56x56-000000-80-0-0.jpg","picture_medium":"https:\/\/e-cdns-images.dzcdn.net\/images\/artist\/a67d4f17c059c335eaf2a57ffab300d9\/250x250-000000-80-0-0.jpg","picture_big":"https:\/\/e-cdns-images.dzcdn.net\/images\/artist\/a67d4f17c059c335eaf2a57ffab300d9\/500x500-000000-80-0-0.jpg","picture_xl":"https:\/\/e-cdns-images.dzcdn.net\/images\/artist\/a67d4f17c059c335eaf2a57ffab300d9\/1000x1000-000000-80-0-0.jpg","nb_album":32,"nb_fan":54,"radio":true,"tracklist":"https:\/\/api.deezer.com\/artist\/89258812\/top?limit=50","type":"artist"}]') }));
- */
+    return this.http.get<any>(url).pipe(map(response => response.data));
+
 
   }
 
