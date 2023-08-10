@@ -35,7 +35,7 @@ export class DeezerApiService {
 
   getTracks(albumId: number): Observable<any> {
     const url = `${this.deezerApiUrl}/album/${albumId}/tracks`;
-    return this.http.get<any>(url).pipe(map(response => response.data));
+    return this.http.get<any>(url, { headers: this.httpHeaders }).pipe(map(response => response.data));
   }
 }
 

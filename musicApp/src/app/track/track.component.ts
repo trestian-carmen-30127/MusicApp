@@ -10,21 +10,21 @@ import { DeezerTrack } from '../../deezer-interfaces';
   styleUrls: ['./track.component.css']
 })
 export class TrackComponent {
-  albumId: number;
+  albumId: number = 0;
   tracks: DeezerTrack[] = [];
 
   constructor(private route: ActivatedRoute, private deezerApiService: DeezerApiService) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params: ParamMap) => {
-      this.albumId = Number(params.get('albumId'));
+      this.albumId = Number(params.get('id'));
       this.getAlbumTracks();
     });
   }
 
   getAlbumTracks(): void {
     this.deezerApiService.getTracks(this.albumId).subscribe(
-      (response) => { this.tracks = response; },
+      (response) => { this.tracks = response.tracks.data; },
       (error) => { console.error('Error fetching tracks:', error); }
     );
   }
