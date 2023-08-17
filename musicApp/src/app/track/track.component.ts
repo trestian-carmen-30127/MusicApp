@@ -24,7 +24,7 @@ export class TrackComponent {
 
   getAlbumTracks(): void {
     this.deezerApiService.getTracks(this.albumId).subscribe(
-      (response) => { this.tracks = response.tracks.data; },
+      (response) => { this.tracks = response; },
       (error) => { console.error('Error fetching tracks:', error); }
     );
   }

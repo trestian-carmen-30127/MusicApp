@@ -17,6 +17,6 @@ export class AppRoutingService {
     }
 
     goToTrackList(albumId: number): void {
-        this.router.navigate(['/tracks', albumId]);
+        this.router.navigate(['/track', albumId]);
     }
 }

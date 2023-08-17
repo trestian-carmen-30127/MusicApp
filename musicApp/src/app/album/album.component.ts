@@ -4,6 +4,7 @@ import { DeezerApiService } from '../../deezer-api.service';
 import { DeezerAlbum } from '../../deezer-interfaces';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable, map, of, switchMap } from 'rxjs';
+import { AppRoutingService } from '../app-routing.service';
 
 @Component({
   selector: 'app-album',
@@ -20,7 +21,7 @@ export class AlbumComponent implements OnInit {
   artistId: number = 0;
   albums: DeezerAlbum[] = [];
 
-  constructor(private route: ActivatedRoute, private deezerApiService: DeezerApiService) { }
+  constructor(private route: ActivatedRoute, private deezerApiService: DeezerApiService, public routingService: AppRoutingService) { }
 
   public ngOnInit() {
     this.route.paramMap.subscribe((params: ParamMap) => {
@@ -34,5 +35,8 @@ export class AlbumComponent implements OnInit {
       (response) => { this.albums = response; },
       (error) => { console.error('Error fetching albums:', error); }
     );
+  }
+  goToTrackList(albumId: number): void {
+    this.routingService.goToTrackList(albumId);
   }
 }

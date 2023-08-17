@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ArtistComponent } from './artist/artist.component';
 import { AlbumComponent } from './album/album.component';
+import { TrackComponent } from './track/track.component';
 
 const routes: Routes = [
   {
@@ -10,7 +11,12 @@ const routes: Routes = [
   {
     path: 'album/:id', component: AlbumComponent
   },
+
+  {
+    path: 'track/:id', component: TrackComponent
+  },
   { path: '**', redirectTo: '' }
+
 ];
 
 @NgModule({

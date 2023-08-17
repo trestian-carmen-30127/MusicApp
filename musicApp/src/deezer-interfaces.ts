@@ -10,7 +10,7 @@ export interface DeezerAlbum {
     id: number;
     title: string;
     cover_medium: string;
-    releade_date: Date;
+    release_date: Date;
 }
 
 export interface DeezerTrack {

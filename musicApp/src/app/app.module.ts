@@ -8,12 +8,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { AlbumComponent } from './album/album.component';
 import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { TrackComponent } from './track/track.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ArtistComponent,
-    AlbumComponent
+    AlbumComponent,
+    TrackComponent
   ],
   imports: [
     BrowserModule,
